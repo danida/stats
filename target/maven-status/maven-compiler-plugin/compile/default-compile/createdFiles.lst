@@ -1,0 +1,9 @@
+Model/Matches.class
+dao/interfaces/dao.class
+dao/BusinessDataDao.class
+Services/Calculation.class
+dani/danistats/FXMLController.class
+Model/BusinessData.class
+Model/Match.class
+dani/danistats/MainApp.class
+dao/MatchDao.class
