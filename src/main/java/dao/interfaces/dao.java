@@ -15,7 +15,7 @@ public interface dao <T> {
 
     public void insert(T t);
 
-    public void delete(T t);
+    public void delete(int id);
     
     public T get(int id);
     

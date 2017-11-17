@@ -21,7 +21,7 @@ public class BusinessDataDao implements dao<BusinessData>{
     }
 
     @Override
-    public void delete(BusinessData t) {
+    public void delete(int t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

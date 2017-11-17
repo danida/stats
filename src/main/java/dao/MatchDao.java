@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,32 +58,24 @@ public class MatchDao implements dao<Match> {
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             List<Match> l = matchs.getMatches();
+            int id = getBiggestId(l);
+            t.setId(id + 1);
             l.add(t);
             matchs.setMatches(l);
             m.marshal(matchs, new File("matches.xml"));
-           
+
         } catch (PropertyException ex) {
             Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JAXBException ex) {
             Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
+        }
+
     }
 
     @Override
-    public void delete(Match t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Match get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Match> getAll() {
-
+    public void delete(int id) {
         Matches matchs = new Matches();
+        Match ret = new Match();
         FileInputStream fis = null;
         File file = new File("matches.xml");
         try {
@@ -99,9 +92,88 @@ public class MatchDao implements dao<Match> {
         } catch (JAXBException ex) {
             Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Iterator it = matchs.getMatches().iterator();
+        while (it.hasNext()) {
+            Match match = (Match) it.next();
+            if (match.getId() == id) {
+                it.remove();
+            }
+        }
 
-        return
-        matchs.getMatches();
+    }
+
+    @Override
+    public Match get(int id) {
+        Matches matchs = new Matches();
+        Match ret = new Match();
+        FileInputStream fis = null;
+        File file = new File("matches.xml");
+        try {
+            fis = new FileInputStream(file);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MatchDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        JAXBContext jaxbContext;
+
+        try {
+            jaxbContext = JAXBContext.newInstance(Matches.class
+            );
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            matchs = (Matches) unmarshaller.unmarshal(new File("matches.xml"));
+
+        } catch (JAXBException ex) {
+            Logger.getLogger(MatchDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        for (Match m : matchs.getMatches()) {
+            if (m.getId() == id) {
+                ret = m;
+            }
+
+        }
+        return ret;
+    }
+
+    @Override
+    public List<Match> getAll() {
+
+        Matches matchs = new Matches();
+        FileInputStream fis = null;
+        File file = new File("matches.xml");
+        try {
+            fis = new FileInputStream(file);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MatchDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        JAXBContext jaxbContext;
+
+        try {
+            jaxbContext = JAXBContext.newInstance(Matches.class
+            );
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            matchs = (Matches) unmarshaller.unmarshal(new File("matches.xml"));
+
+        } catch (JAXBException ex) {
+            Logger.getLogger(MatchDao.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return matchs.getMatches();
+    }
+
+    private int getBiggestId(List<Match> l) {
+        int max = 0;
+        for (Match m : l) {
+            if (m.getId() > max) {
+                max = m.getId();
+            }
+
+        }
+        return max;
     }
 
 }
