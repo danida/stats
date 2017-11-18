@@ -1,18 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <matches>
     <match>
-        <away>ASD</away>
+        <away>
+            <id>0</id>
+        </away>
         <date>3917-08-11T20:00:00+02:00</date>
-        <home>Chelsea</home>
+        <home>
+            <id>0</id>
+        </home>
         <id>1</id>
         <odds>2.2</odds>
         <win>true</win>
     </match>
     <match>
-        <away>Manu</away>
+        <away>
+            <id>0</id>
+        </away>
         <date>3917-08-11T20:00:00+02:00</date>
-        <home>Chelsea</home>
+        <home>
+            <id>0</id>
+        </home>
         <id>2</id>
+        <odds>2.2</odds>
+        <win>true</win>
+    </match>
+    <match>
+        <away>
+            <fixturesurl>{"href":"http://api.football-data.org/v1/teams/66/fixtures"}</fixturesurl>
+            <id>66</id>
+            <imageurl>http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg</imageurl>
+            <name>Manchester United FC</name>
+        </away>
+        <date>3917-08-11T20:00:00+02:00</date>
+        <home>
+            <fixturesurl>{"href":"http://api.football-data.org/v1/teams/61/fixtures"}</fixturesurl>
+            <id>61</id>
+            <imageurl>http://upload.wikimedia.org/wikipedia/de/5/5c/Chelsea_crest.svg</imageurl>
+            <name>Chelsea FC</name>
+        </home>
+        <id>3</id>
         <odds>2.2</odds>
         <win>true</win>
     </match>

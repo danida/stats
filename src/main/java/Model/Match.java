@@ -18,65 +18,38 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Match {
 
     private int id;
-    private String home;
-    private String away;
-    private List<String> type = new ArrayList<>();
-    private boolean win;
-    private double odds;
+    private Team home;
+    private Team away;
     private Date date;
 
     public Match() {
     }
 
     
-    public Match(String home, String away, boolean win, double odds, Date date) {
+    public Match(Team home, Team away, boolean win, double odds, Date date) {
         this.home = home;
         this.away = away;
-        this.win = win;
-        this.odds = odds;
+    
         this.date = date;
     }
 
-    public String getHome() {
+    public Team getHome() {
         return home;
     }
 
-    public void setHome(String home) {
+    public void setHome(Team home) {
         this.home = home;
     }
 
-    public String getAway() {
+    public Team getAway() {
         return away;
     }
 
-    public void setAway(String away) {
+    public void setAway(Team away) {
         this.away = away;
     }
 
-    public List<String> getType() {
-        return type;
-    }
-
-    public void setType(List<String> type) {
-        this.type = type;
-    }
-
-    public boolean isWin() {
-        return win;
-    }
-
-    public void setWin(boolean win) {
-        this.win = win;
-    }
-
-    public double getOdds() {
-        return odds;
-    }
-
-    public void setOdds(double odds) {
-        this.odds = odds;
-    }
-
+   
     public int getId() {
         return id;
     }

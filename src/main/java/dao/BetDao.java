@@ -5,9 +5,8 @@
  */
 package dao;
 
-import Model.Match;
-import Model.Matches;
-import dao.interfaces.dao;
+import Model.Bet;
+import Model.Bets;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,77 +21,78 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 
+
+
 /**
  *
- * @author dnovak
+ * @author danida
  */
-public class MatchDao implements dao<Match> {
-
-    @Override
-    public void insert(Match t) {
-        Matches matchs = new Matches();
+public class BetDao {
+    public void insert(Bet t) {
+        Bets bets = new Bets();
         FileInputStream fis = null;
-        File file = new File("matches.xml");
+        File file = new File("bets.xml");
         try {
             fis = new FileInputStream(file);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
+            
+            Logger.getLogger(BetDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         JAXBContext jaxbContext;
         try {
-            jaxbContext = JAXBContext.newInstance(Matches.class);
+            jaxbContext = JAXBContext.newInstance(Bets.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            matchs = (Matches) unmarshaller.unmarshal(new File("matches.xml"));
+            bets = (Bets) unmarshaller.unmarshal(new File("bets.xml"));
             fis.close();
         } catch (JAXBException ex) {
-            Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BetDao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BetDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
 
-            JAXBContext context = JAXBContext.newInstance(Matches.class);
+            JAXBContext context = JAXBContext.newInstance(Bets.class);
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            List<Match> l = matchs.getMatches();
+            List<Bet> l = bets.getBets();
             int id = getBiggestId(l);
             t.setId(id + 1);
             l.add(t);
-            matchs.setMatches(l);
-            m.marshal(matchs, new File("matches.xml"));
+            bets.setBets(l);
+            m.marshal(bets, new File("bets.xml"));
 
         } catch (PropertyException ex) {
-            Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BetDao.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JAXBException ex) {
-            Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BetDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    @Override
+    
     public void delete(int id) {
-        Matches matchs = new Matches();
-        Match ret = new Match();
+        Bets bets = new Bets();
+        Bet ret = new Bet();
         FileInputStream fis = null;
-        File file = new File("matches.xml");
+        File file = new File("bets.xml");
         try {
             fis = new FileInputStream(file);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BetDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         JAXBContext jaxbContext;
         try {
-            jaxbContext = JAXBContext.newInstance(Matches.class);
+            jaxbContext = JAXBContext.newInstance(Bets.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            matchs = (Matches) unmarshaller.unmarshal(new File("matches.xml"));
+            bets = (Bets) unmarshaller.unmarshal(new File("bets.xml"));
 
         } catch (JAXBException ex) {
-            Logger.getLogger(MatchDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BetDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Iterator it = matchs.getMatches().iterator();
+        Iterator it = bets.getBets().iterator();
         while (it.hasNext()) {
-            Match match = (Match) it.next();
+            Bet match = (Bet) it.next();
             if (match.getId() == id) {
                 it.remove();
             }
@@ -100,32 +100,31 @@ public class MatchDao implements dao<Match> {
 
     }
 
-    @Override
-    public Match get(int id) {
-        Matches matchs = new Matches();
-        Match ret = new Match();
+    public Bet get(int id) {
+        Bets bets = new Bets();
+        Bet ret = new Bet();
         FileInputStream fis = null;
-        File file = new File("matches.xml");
+        File file = new File("bets.xml");
         try {
             fis = new FileInputStream(file);
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MatchDao.class
+            Logger.getLogger(BetDao.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
         JAXBContext jaxbContext;
 
         try {
-            jaxbContext = JAXBContext.newInstance(Matches.class
+            jaxbContext = JAXBContext.newInstance(Bets.class
             );
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            matchs = (Matches) unmarshaller.unmarshal(new File("matches.xml"));
+            bets = (Bets) unmarshaller.unmarshal(new File("bets.xml"));
 
         } catch (JAXBException ex) {
-            Logger.getLogger(MatchDao.class
+            Logger.getLogger(BetDao.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-        for (Match m : matchs.getMatches()) {
+        for (Bet m : bets.getBets()) {
             if (m.getId() == id) {
                 ret = m;
             }
@@ -134,38 +133,39 @@ public class MatchDao implements dao<Match> {
         return ret;
     }
 
-    @Override
-    public List<Match> getAll() {
+    public List<Bet> getAll() {
 
-        Matches matchs = new Matches();
+        Bets bets = new Bets();
         FileInputStream fis = null;
-        File file = new File("matches.xml");
+        File file = new File("bets.xml");
         try {
             fis = new FileInputStream(file);
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(MatchDao.class
+            Logger.getLogger(BetDao.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
         JAXBContext jaxbContext;
 
         try {
-            jaxbContext = JAXBContext.newInstance(Matches.class
+            jaxbContext = JAXBContext.newInstance(Bets.class
             );
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            matchs = (Matches) unmarshaller.unmarshal(new File("matches.xml"));
+            bets = (Bets) unmarshaller.unmarshal(new File("bets.xml"));
 
         } catch (JAXBException ex) {
-            Logger.getLogger(MatchDao.class
+            Logger.getLogger(BetDao.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        return matchs.getMatches();
+        return bets.getBets();
     }
 
-    private int getBiggestId(List<Match> l) {
+
+    
+    private int getBiggestId(List<Bet> l) {
         int max = 0;
-        for (Match m : l) {
+        for (Bet m : l) {
             if (m.getId() > max) {
                 max = m.getId();
             }
@@ -173,5 +173,4 @@ public class MatchDao implements dao<Match> {
         }
         return max;
     }
-
 }
