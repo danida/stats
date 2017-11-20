@@ -5,6 +5,7 @@
  */
 package Model;
 
+import javafx.beans.property.SimpleStringProperty;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -60,7 +61,11 @@ public class Team {
     public void setFixturesurl(String fixturesurl) {
         this.fixturesurl = fixturesurl;
     }
+    public SimpleStringProperty getNameSingleStringProp(){
     
+        return new SimpleStringProperty(name);
+    
+    }
     
     
 }

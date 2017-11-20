@@ -5,10 +5,15 @@
  */
 package Controller;
 
+import Model.Team;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
@@ -19,6 +24,13 @@ import javafx.scene.web.WebView;
  */
 public class TeamController implements Initializable {
 
+    private ObservableList<Team> teams = FXCollections.observableArrayList();
+
+    @FXML
+    private TableView<Team> teamTable;
+    @FXML
+    private TableColumn<Team, String> name;
+
     @FXML
     private WebView picture;
 
@@ -27,7 +39,10 @@ public class TeamController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        name.setCellValueFactory(celldata -> 
+             celldata.getValue().getNameSingleStringProp()
+        );
         picture.getEngine().load("https://upload.wikimedia.org/wikipedia/en/5/53/FC_Cologne_logo.svg");
-    }    
-    
+    }
+
 }
